@@ -11,57 +11,96 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
 
-    <ToggleButton
-        android:id="@+id/Tglbtn_On"
+    <Button
+        android:id="@+id/btn_OnOff"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="64dp"
-        android:textOff="Turn On"
-        android:textOn="Turn Off"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="77dp"
+        android:text="Turn On/Off"
+        app:layout_constraintBottom_toTopOf="@+id/btn_Discoverable"
+        app:layout_constraintStart_toStartOf="@+id/btn_Discoverable"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btn_Scan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="11dp"
         android:text="Scan For Devices"
-        app:layout_constraintBottom_toTopOf="@+id/btn_ListPairedDevices"
-        app:layout_constraintStart_toStartOf="@+id/btn_ListPairedDevices" />
+        app:layout_constraintBottom_toTopOf="@+id/List"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_Discoverable" />
 
     <Button
         android:id="@+id/btn_Discoverable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="13dp"
         android:text="Discoverable"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Tglbtn_On" />
-
-    <Button
-        android:id="@+id/btn_ListPairedDevices"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="9dp"
-        android:layout_marginEnd="25dp"
-        android:text="List Paired Devices"
-        app:layout_constraintBottom_toTopOf="@+id/List"
-        app:layout_constraintEnd_toEndOf="@+id/List" />
+        app:layout_constraintBottom_toTopOf="@+id/btn_Scan"
+        app:layout_constraintStart_toStartOf="@+id/btn_Scan"
+        app:layout_constraintTop_toBottomOf="@+id/btn_OnOff" />
 
     <ListView
         android:id="@+id/List"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="6dp"
+        android:layout_marginBottom="13dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="9dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_Send"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_Scan" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Enter text here"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_Send"
+        app:layout_constraintEnd_toStartOf="@+id/btn_Send"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn_Send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="11dp"
+        android:layout_marginEnd="13dp"
+        android:text="Send"
+        app:layout_constraintBottom_toTopOf="@+id/btn_StartConnection"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editText"
+        app:layout_constraintTop_toBottomOf="@+id/List" />
+
+    <TextView
+        android:id="@+id/tv_IncomingMessage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_Discoverable" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_StartConnection" />
+
+    <Button
+        android:id="@+id/btn_StartConnection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="9dp"
+        android:layout_marginEnd="13dp"
+        android:text="Connect"
+        app:layout_constraintBottom_toTopOf="@+id/tv_IncomingMessage"
+        app:layout_constraintEnd_toEndOf="@+id/editText"
+        app:layout_constraintTop_toBottomOf="@+id/btn_Send" />
 
 </android.support.constraint.ConstraintLayout>

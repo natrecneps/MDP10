@@ -73,4 +73,10 @@ public class Transmit extends MainActivity{
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onBackPressed(){
+        Intent i = new Intent(Transmit.this, MainActivity.class);
+        startActivity(i);
+    }
 }
