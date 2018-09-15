@@ -62,7 +62,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     case BluetoothAdapter.STATE_OFF:
                         Log.d(TAG, "onReceive: STATE_OFF");
                         //Clear the list if Bluetooth is turned off
-                        mDeviceListAdapter.clear();
+                        if (mDeviceListAdapter != null){
+                            mDeviceListAdapter.clear();
+                        }
                         Toast.makeText(getApplicationContext(),"Bluetooth is now turned off.",Toast.LENGTH_SHORT).show();
                         break;
                     case BluetoothAdapter.STATE_TURNING_OFF:
@@ -116,8 +118,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private final BroadcastReceiver mBroadcastReceiver3 = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            //Clear the list to prevent duplicate when button is pressed.
-            mBTDevices.clear();
 
             final String action = intent.getAction();
             Log.d(TAG, "onReceive: ACTION FOUND");
@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 //case 1: bonded already
                 if (mDevice.getBondState() == BluetoothDevice.BOND_BONDED){
                     Log.d(TAG, "BroadcastReceiver: BOND_BONDED.");
-                    Toast.makeText(getApplicationContext(),"Device is already paired",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Device is now paired",Toast.LENGTH_SHORT).show();
                     //inside BroadcastReceiver4
                     mBTDevice = mDevice;
                 }
@@ -234,6 +234,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         btn_Scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                //Clear the list to prevent duplicate when Scan button is pressed.
+                if (mDeviceListAdapter != null){
+                    mBTDevices.clear();
+                    mDeviceListAdapter.clear();
+                }
+                else {
+                    mBTDevices.clear();
+                }
 
                 if (!mBluetoothAdapter.isEnabled()){
                     Toast.makeText(getApplicationContext(),"Turn on Bluetooth to scan for devices.",Toast.LENGTH_SHORT).show();
