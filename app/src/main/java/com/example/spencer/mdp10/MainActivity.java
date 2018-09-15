@@ -29,19 +29,17 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
-
     public final static String TAG = "MainActivity";
+
+    BluetoothAdapter mBluetoothAdapter;
+    BluetoothChatService mBluetoothChat;
 
     Button btn_OnOff, btn_Scan, btn_Discoverable, btn_Send, btn_StartConnection;
     ListView list;
     EditText etSend;
+
     TextView incomingMessages;
-
     StringBuilder messages;
-
-    BluetoothChatService mBluetoothChat;
-
-    private BluetoothAdapter mBluetoothAdapter;
 
     private static final UUID MY_UUID_INSECURE = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
@@ -234,8 +232,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     //checkBTPermissions();
 
                     mBluetoothAdapter.startDiscovery();
-                    IntentFilter BTIntent = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-                    registerReceiver(mBroadcastReceiver3, BTIntent);
+                    IntentFilter discoverDevicesIntent = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+                    registerReceiver(mBroadcastReceiver3, discoverDevicesIntent);
                 }
                 if (!mBluetoothAdapter.isDiscovering()){
 
@@ -243,8 +241,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     //checkBTPermissions();
 
                     mBluetoothAdapter.startDiscovery();
-                    IntentFilter BTIntent = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-                    registerReceiver(mBroadcastReceiver3, BTIntent);
+                    IntentFilter discoverDevicesIntent = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+                    registerReceiver(mBroadcastReceiver3, discoverDevicesIntent);
                 }
             }
         });
@@ -258,8 +256,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
                 startActivity(discoverableIntent);
 
-                IntentFilter BTIntent = new IntentFilter(BluetoothAdapter.ACTION_SCAN_MODE_CHANGED);
-                registerReceiver(mBroadcastReceiver2, BTIntent);
+                IntentFilter intentFilter = new IntentFilter(BluetoothAdapter.ACTION_SCAN_MODE_CHANGED);
+                registerReceiver(mBroadcastReceiver2, intentFilter);
             }
         });
     }
@@ -293,7 +291,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             Toast.makeText(getApplicationContext(),"Bluetooth is not supported on your device.",Toast.LENGTH_SHORT).show();
             Log.d(TAG, "enableDisableBT:Does not have BT capabilities.");
         }
-        if (!mBluetoothAdapter.enable()){
+        if (!mBluetoothAdapter.isEnabled()){
             Intent enableBTIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivity(enableBTIntent);
             Toast.makeText(getApplicationContext(),"Bluetooth is now enabled",Toast.LENGTH_SHORT).show();

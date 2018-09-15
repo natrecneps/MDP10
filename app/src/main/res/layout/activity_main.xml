@@ -50,57 +50,57 @@
         android:layout_marginBottom="13dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_Send"
+        app:layout_constraintBottom_toTopOf="@+id/btn_StartConnection"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_Scan" />
 
     <EditText
         android:id="@+id/editText"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="39dp"
         android:ems="10"
         android:hint="Enter text here"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="@+id/btn_Send"
         app:layout_constraintEnd_toStartOf="@+id/btn_Send"
-        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btn_Send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="11dp"
-        android:layout_marginEnd="13dp"
+        android:layout_marginBottom="13dp"
+        android:layout_marginEnd="47dp"
         android:text="Send"
-        app:layout_constraintBottom_toTopOf="@+id/btn_StartConnection"
+        app:layout_constraintBottom_toTopOf="@+id/tv_IncomingMessage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/editText"
-        app:layout_constraintTop_toBottomOf="@+id/List" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_StartConnection" />
 
     <TextView
         android:id="@+id/tv_IncomingMessage"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="14dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_StartConnection" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_Send" />
 
     <Button
         android:id="@+id/btn_StartConnection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="9dp"
-        android:layout_marginEnd="13dp"
+        android:layout_marginBottom="7dp"
+        android:layout_marginEnd="12dp"
         android:text="Connect"
-        app:layout_constraintBottom_toTopOf="@+id/tv_IncomingMessage"
+        app:layout_constraintBottom_toTopOf="@+id/btn_Send"
         app:layout_constraintEnd_toEndOf="@+id/editText"
-        app:layout_constraintTop_toBottomOf="@+id/btn_Send" />
+        app:layout_constraintTop_toBottomOf="@+id/List" />
 
 </android.support.constraint.ConstraintLayout>
