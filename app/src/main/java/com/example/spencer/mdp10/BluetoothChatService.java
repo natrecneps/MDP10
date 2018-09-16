@@ -23,7 +23,9 @@ public class BluetoothChatService {
     private static final String appName = "MDP10";
 
     //Unique UUID for this application
-    private static final UUID MY_UUID_INSECURE = UUID.fromString("8ce255c0-200a-11e0-ac64-0800200c9a66");
+    private static final UUID MY_UUID_INSECURE =
+            UUID.fromString("8ce255c0-200a-11e0-ac64-0800200c9a66");
+            //UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a66");
 
     private final BluetoothAdapter mBluetoothAdapter;
     Context mContext;
@@ -270,7 +272,7 @@ public class BluetoothChatService {
                 mmSocket.close();
             }
             catch (IOException e){
-
+                Log.e(TAG, "close() of connect socket failed", e);
             }
         }
     }
