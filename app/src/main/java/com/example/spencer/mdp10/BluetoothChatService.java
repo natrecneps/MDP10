@@ -23,8 +23,7 @@ public class BluetoothChatService {
     private static final String appName = "MDP10";
 
     //Unique UUID for this application
-    private static final UUID MY_UUID_INSECURE =
-            UUID.fromString("8ce255c0-200a-11e0-ac64-0800200c9a66");
+    private static final UUID MY_UUID_INSECURE = UUID.fromString("8ce255c0-200a-11e0-ac64-0800200c9a66");
             //UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a66");
 
     private final BluetoothAdapter mBluetoothAdapter;
@@ -52,7 +51,6 @@ public class BluetoothChatService {
 
         //The Local server socket
         private final BluetoothServerSocket mmServerSocket;
-
 
         public AcceptThread(){
             BluetoothServerSocket tmp = null;
@@ -127,7 +125,7 @@ public class BluetoothChatService {
                         MY_UUID_INSECURE);
                 tmp = mmDevice.createRfcommSocketToServiceRecord(deviceUUID);
             }
-            catch (IOException e){
+            catch (Exception e){
                 Log.e(TAG, "ConnectThread: Could not create InsecureRfcommSocket " + e.getMessage());
             }
             mmSocket = tmp;
@@ -244,8 +242,6 @@ public class BluetoothChatService {
                     Intent incomingMessageIntent = new Intent("incomingMessage");
                     incomingMessageIntent.putExtra("theMessage", incomingMessage);
                     LocalBroadcastManager.getInstance(mContext).sendBroadcast(incomingMessageIntent);
-
-
                 }
                 catch (IOException e){
                     Log.e(TAG, "write: Error reading input stream. " + e.getMessage());

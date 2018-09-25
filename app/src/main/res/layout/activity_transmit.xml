@@ -14,60 +14,41 @@
         android:id="@+id/et_Send"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="14dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginStart="16dp"
+        android:hint="Your message"
         android:inputType="text"
-        android:text=""
-        app:layout_constraintBottom_toTopOf="@+id/btn_Send"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_Send"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_EnterTextHere" />
+        app:layout_constraintTop_toTopOf="@+id/btn_Send" />
     //>
 
     <TextView
         android:id="@+id/tv_Receive"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="103dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginEnd="9dp"
         android:layout_marginStart="9dp"
+        android:layout_marginTop="66dp"
         android:background="@drawable/back"
         android:paddingLeft="5dp"
         android:text=""
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btn_Send"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_ReceiveMessage" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btn_Send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:layout_marginStart="19dp"
+        android:layout_marginBottom="46dp"
+        android:layout_marginEnd="16dp"
         android:text="Send"
-        app:layout_constraintBottom_toTopOf="@+id/tv_ReceiveMessage"
-        app:layout_constraintStart_toEndOf="@+id/tv_ReceiveMessage"
-        app:layout_constraintTop_toBottomOf="@+id/et_Send" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/et_Send"
+        app:layout_constraintTop_toBottomOf="@+id/tv_Receive" />
 
-    <TextView
-        android:id="@+id/tv_EnterTextHere"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="103dp"
-        android:text="Enter A Message:"
-        app:layout_constraintBottom_toTopOf="@+id/et_Send"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_ReceiveMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="9dp"
-        android:text="Incoming Message:"
-        app:layout_constraintBottom_toTopOf="@+id/tv_Receive"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_Send" />
 </android.support.constraint.ConstraintLayout>

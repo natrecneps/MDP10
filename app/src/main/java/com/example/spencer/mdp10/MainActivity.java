@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -16,30 +15,22 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
     public final static String TAG = "MainActivity";
 
     BluetoothAdapter mBluetoothAdapter;
-    BluetoothChatService mBluetoothChat;
 
-    Button btn_OnOff, btn_Scan, btn_Discoverable, btn_Send, btn_StartConnection;
+    Button btn_OnOff, btn_Scan, btn_Discoverable, btn_Send, btn_PairedDevices;
     ListView list;
-    EditText etSend;
-
-    TextView incomingMessages;
-    StringBuilder messages;
 
     private static final UUID MY_UUID_INSECURE =
             //UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a66");
@@ -48,8 +39,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     BluetoothDevice mBTDevice;
 
     public ArrayList<BluetoothDevice> mBTDevices = new ArrayList<>();
+    public ArrayList<BluetoothDevice> mBTDevices2 = new ArrayList<>();
 
-    public DeviceListAdapter mDeviceListAdapter;
+    public DeviceListAdapter mDeviceListAdapter, mDeviceListAdapter2;
 
     //Create a BroadcastReceiver for ACTION_FOUND
     private final BroadcastReceiver mBroadcastReceiver1 = new BroadcastReceiver() {
@@ -64,9 +56,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     case BluetoothAdapter.STATE_OFF:
                         Log.d(TAG, "onReceive: STATE_OFF");
                         //Clear the list if Bluetooth is turned off
-                        if (mDeviceListAdapter != null){
-                            mDeviceListAdapter.clear();
-                        }
+                        clearListBTOff();
                         Toast.makeText(getApplicationContext(),"Bluetooth is now turned off.",Toast.LENGTH_SHORT).show();
                         break;
                     case BluetoothAdapter.STATE_TURNING_OFF:
@@ -145,14 +135,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 //case 1: bonded already
                 if (mDevice.getBondState() == BluetoothDevice.BOND_BONDED){
                     Log.d(TAG, "BroadcastReceiver: BOND_BONDED.");
-                    Toast.makeText(getApplicationContext(),"Device is now paired",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Device is successfully paired",Toast.LENGTH_SHORT).show();
                     //inside BroadcastReceiver4
                     mBTDevice = mDevice;
                 }
                 //case 2: creating a bond
                 if (mDevice.getBondState() == BluetoothDevice.BOND_BONDING){
                     Log.d(TAG, "BroadcastReceiver: BOND_BONDING.");
-                    Toast.makeText(getApplicationContext(),"Requesting to pair with the other device...",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Pairing with the other device...",Toast.LENGTH_SHORT).show();
                 }
                 //case 3: breaking a bond
                 if (mDevice.getBondState() == BluetoothDevice.BOND_NONE){
@@ -178,9 +168,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //avoid automatically appear android keyboard when activity start
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-
+        //for toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -188,17 +176,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         btn_Scan = (Button) findViewById(R.id.btn_Scan);
         btn_Discoverable = (Button) findViewById(R.id.btn_Discoverable);
         list = (ListView) findViewById(R.id.List);
-
-        btn_StartConnection = (Button) findViewById(R.id.btn_StartConnection);
-        btn_Send = (Button) findViewById(R.id.btn_Send);
-        etSend = (EditText) findViewById(R.id.editText);
-
-        incomingMessages = (TextView) findViewById(R.id.tv_IncomingMessage);
-        messages = new StringBuilder();
+        btn_PairedDevices = (Button) findViewById(R.id.btn_PairedDevices);
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
-        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, new IntentFilter("incomingMessage"));
 
         mBTDevices = new ArrayList<>();
 
@@ -216,20 +196,39 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         });
 
-        btn_StartConnection.setOnClickListener(new View.OnClickListener(){
+        btn_PairedDevices.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
-                startConnection();
-            }
-        });
+                if (!mBluetoothAdapter.isEnabled()){
+                    Log.d(TAG, "btnPairedDevices: Bluetooth is not turned on");
+                    Toast.makeText(getApplicationContext(),"Turn on Bluetooth to list paired devices.",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    mBluetoothAdapter.cancelDiscovery();
 
-        btn_Send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                byte[] bytes = etSend.getText().toString().getBytes(Charset.defaultCharset());
-                mBluetoothChat.write(bytes);
+                    Log.d(TAG, "btnPairedDevices: listing paired devices");
 
-                etSend.setText("");
+                    //Prevent duplicate
+                    if (mDeviceListAdapter2 != null){
+                        mBTDevices2.clear();
+                        mDeviceListAdapter2.clear();
+                    }
+                    else {
+                        mBTDevices2.clear();
+                    }
+
+                    Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
+
+                    if (pairedDevices.size()>0) {
+                        for (BluetoothDevice device : pairedDevices) {
+                            mBTDevices.clear(); //prevent clicking on mBTDevices
+                            mBTDevices2.add(device);
+                        }
+                        mDeviceListAdapter2 = new DeviceListAdapter(getApplicationContext(), R.layout.device_adapter_view, mBTDevices2);
+                        list.setAdapter(mDeviceListAdapter2);
+                    }
+                }
+
             }
         });
 
@@ -288,30 +287,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         });
     }
 
-    BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String text = intent.getStringExtra("theMessage");
-
-            messages.append(text + "\n");
-
-            incomingMessages.setText(messages);
-        }
-    };
-
-    //method for starting connection
-    //remember the connection will fail and app will crash if you haven't paired first
-    public void startConnection(){
-        startBTConnection(mBTDevice, MY_UUID_INSECURE);
-    }
-
-    //Starting chat service method
-    public void startBTConnection(BluetoothDevice device, UUID uuid){
-        Log.d(TAG, "startBTConnection: Initializing RFCOM Bluetooth Connection.");
-
-        mBluetoothChat.startClient(device, uuid);
-    }
-
     public void enableDisableBT(){
         if (mBluetoothAdapter == null){
             Toast.makeText(getApplicationContext(),"Bluetooth is not supported on your device.",Toast.LENGTH_SHORT).show();
@@ -349,11 +324,41 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         //create the bond
         //NOTE: Requires API 17+?
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2){
-            Log.d(TAG, "Trying to pair with " + deviceName);
-            mBTDevices.get(position).createBond();
+            try {
+                if (mBTDevices.get(position).getBondState() == BluetoothDevice.BOND_NONE){
+                    Log.d(TAG, "Trying to pair with " + deviceName);
+                    mBTDevices.get(position).createBond();
 
-            mBTDevice = mBTDevices.get(position);
-            mBluetoothChat = new BluetoothChatService(MainActivity.this);
+                    mBTDevice = mBTDevices.get(position);
+                    //mBluetoothChat = new BluetoothChatService(MainActivity.this);
+                }
+                else if (mBTDevices.get(position).getBondState() == BluetoothDevice.BOND_BONDED) {
+                    //Start chat if already paired
+                    StartChat(mBTDevices.get(position));
+                }
+                else {
+                    Log.d(TAG, "onItemClick: did nothing.");
+                }
+            }
+            catch (Exception e) {
+                Log.d(TAG, "Error pairing device");
+                Toast.makeText(getApplicationContext(),"Please try again later.",Toast.LENGTH_SHORT).show();
+            }
+        } //method ends here
+    }
+
+    public void StartChat(BluetoothDevice selectedDevice){
+        Intent chatIntent = new Intent(MainActivity.this, Transmit.class);
+        chatIntent.putExtra("btDevice", selectedDevice);
+        startActivity(chatIntent);
+    }
+
+    private void clearListBTOff(){
+        if (mDeviceListAdapter != null){
+            mDeviceListAdapter.clear();
+        }
+        if (mDeviceListAdapter2 != null){
+            mDeviceListAdapter2.clear();
         }
     }
 
@@ -363,9 +368,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
         MenuItem itemToHide = menu.findItem(R.id.bluetooth);
-        MenuItem itemToShow = menu.findItem(R.id.transmit);
+        MenuItem itemToHide2 = menu.findItem(R.id.transmit);
         itemToHide.setVisible(false);
-        itemToShow.setVisible(true);
+        itemToHide2.setVisible(false);
         return true;
     }
 

@@ -26,11 +26,10 @@
         android:id="@+id/btn_Scan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="11dp"
+        android:layout_marginEnd="7dp"
         android:text="Scan For Devices"
-        app:layout_constraintBottom_toTopOf="@+id/List"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btn_PairedDevices"
+        app:layout_constraintEnd_toEndOf="@+id/btn_PairedDevices"
         app:layout_constraintTop_toBottomOf="@+id/btn_Discoverable" />
 
     <Button
@@ -47,15 +46,37 @@
         android:id="@+id/List"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="13dp"
+        android:layout_marginBottom="21dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_StartConnection"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_PairedDevices" />
+
+    <Button
+        android:id="@+id/btn_PairedDevices"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:text="List Paired Devices"
+        app:layout_constraintBottom_toTopOf="@+id/List"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_Scan" />
 
-    <EditText
+</android.support.constraint.ConstraintLayout>
+
+    <!--
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    //for listview:
+            app:layout_constraintBottom_toTopOf="@+id/btn_StartConnection"
+
+                <EditText
         android:id="@+id/editText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -67,40 +88,40 @@
         app:layout_constraintEnd_toStartOf="@+id/btn_Send"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/btn_Send"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="13dp"
-        android:layout_marginEnd="47dp"
-        android:text="Send"
-        app:layout_constraintBottom_toTopOf="@+id/tv_IncomingMessage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/editText"
-        app:layout_constraintTop_toBottomOf="@+id/btn_StartConnection" />
+        <Button
+            android:id="@+id/btn_Send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="13dp"
+            android:layout_marginEnd="47dp"
+            android:text="Send"
+            app:layout_constraintBottom_toTopOf="@+id/tv_IncomingMessage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/editText"
+            app:layout_constraintTop_toBottomOf="@+id/btn_StartConnection" />
 
-    <TextView
-        android:id="@+id/tv_IncomingMessage"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="14dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:text=""
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_Send" />
+        <TextView
+            android:id="@+id/tv_IncomingMessage"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="14dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:text=""
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_Send" />
 
-    <Button
-        android:id="@+id/btn_StartConnection"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="7dp"
-        android:layout_marginEnd="12dp"
-        android:text="Connect"
-        app:layout_constraintBottom_toTopOf="@+id/btn_Send"
-        app:layout_constraintEnd_toEndOf="@+id/editText"
-        app:layout_constraintTop_toBottomOf="@+id/List" />
+        <Button
+            android:id="@+id/btn_StartConnection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="7dp"
+            android:layout_marginEnd="12dp"
+            android:text="Connect"
+            app:layout_constraintBottom_toTopOf="@+id/btn_Send"
+            app:layout_constraintEnd_toEndOf="@+id/editText"
+            app:layout_constraintTop_toBottomOf="@+id/List" />
 
-</android.support.constraint.ConstraintLayout>
+    -->
