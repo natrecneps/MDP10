@@ -3,19 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/transmit"
-        android:title="Transmit"
-        android:visible="false"
+        android:id="@+id/About"
+        android:title="About"
+        android:visible="true"
         app:showAsAction="always"
-        android:icon="@drawable/ic_send_black_24dp"
-        />
-
-    <item
-        android:id="@+id/bluetooth"
-        android:title="Bluetooth"
-        android:visible="false"
-        app:showAsAction="always"
-        android:icon="@drawable/ic_bluetooth_black_24dp"
+        android:icon="@drawable/ic_info_outline"
         />
 
 </menu>

@@ -348,7 +348,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public void StartChat(BluetoothDevice selectedDevice){
-        Intent chatIntent = new Intent(MainActivity.this, Transmit.class);
+        Intent chatIntent = new Intent(MainActivity.this, TransmitActivity.class);
         chatIntent.putExtra("btDevice", selectedDevice);
         startActivity(chatIntent);
     }
@@ -367,10 +367,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
-        MenuItem itemToHide = menu.findItem(R.id.bluetooth);
-        MenuItem itemToHide2 = menu.findItem(R.id.transmit);
-        itemToHide.setVisible(false);
-        itemToHide2.setVisible(false);
+        //MenuItem itemToHide = menu.findItem(R.id.About);
+        //itemToHide.setVisible(false);
         return true;
     }
 
@@ -380,13 +378,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Intent intent;
 
         switch(item.getItemId()){
-            case R.id.transmit:
-                intent = new Intent(this, Transmit.class);
-                startActivity(intent);
-                break;
-            case R.id.bluetooth:
-                intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
+            case R.id.About:
+                Toast.makeText(getApplicationContext(), "Made by Spencer Tan and Vo Hong Khanh of Group 10, Semester 1 18/19", Toast.LENGTH_SHORT).show();
                 break;
         }
         return super.onOptionsItemSelected(item);

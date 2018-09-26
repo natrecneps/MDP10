@@ -84,7 +84,6 @@ public class BluetoothChatService {
                 Log.e(TAG, "AcceptThread: IOException: " + e.getMessage());
             }
 
-            //talk about it later
             if (socket != null){
                 connected(socket, mmDevice);
             }
@@ -123,7 +122,7 @@ public class BluetoothChatService {
             try{
                 Log.d(TAG, "ConnectThread: Trying to create InsecureRfcommSocket using UUID: " +
                         MY_UUID_INSECURE);
-                tmp = mmDevice.createRfcommSocketToServiceRecord(deviceUUID);
+                tmp = mmDevice.createRfcommSocketToServiceRecord(UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"));
             }
             catch (Exception e){
                 Log.e(TAG, "ConnectThread: Could not create InsecureRfcommSocket " + e.getMessage());
