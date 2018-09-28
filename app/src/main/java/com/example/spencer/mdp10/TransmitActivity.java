@@ -60,6 +60,7 @@ public class TransmitActivity extends MainActivity{
                 //Device is now connected
                 Log.d(TAG, "btReceiver: Connected.");
                 Display("Connected to "+ device.getName()+ " - " + device.getAddress());
+                btn_Send.setEnabled(true);
             }
             else if (BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED.equals(action)) {
                 //Device is about to disconnect
@@ -96,6 +97,7 @@ public class TransmitActivity extends MainActivity{
         setSupportActionBar(toolbar);
 
         btn_Send = (Button)findViewById(R.id.btn_Send);
+        btn_Send.setEnabled(false);
         et_Send = (EditText)findViewById(R.id.et_Send);
         tv_Receive = (TextView)findViewById(R.id.tv_Receive);
         //scrollable textview
